@@ -1,3 +1,3 @@
-# Angular & Nodejs JWT Auth
+# Test Boxmotions | React & API REST in Laravel
 
 ![](./screenshot.png)
