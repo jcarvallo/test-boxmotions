@@ -17,11 +17,12 @@ import {
 
 const Elevators = ({ ...props }) => {
   const [disabled, setDisabled] = useState(false);
+  const panel = [...props.floors].reverse();
   useEffect(() => {
     if (
       props.disabledPanel &&
       props.disabledPanel.disable &&
-      props.disabledPanel.elevator === props.name
+      props.disabledPanel.elevator === props.id
     ) {
       setDisabled(props.disabledPanel.disable);
     } else {
@@ -32,85 +33,35 @@ const Elevators = ({ ...props }) => {
   return (
     <div>
       <Card className="mb-4">
-        <CardHeader>Ascensor {props.name}</CardHeader>
+        <CardHeader>{props.name}</CardHeader>
         <CardBody>
           <Row className="text-center">
             <Col sm="12" md={{ size: 6, offset: 3 }}>
               <Card>
                 <CardHeader>Tablero</CardHeader>
                 <CardBody>
-                  <Row>
-                    <Col className="mb-1">
-                      <Button
-                        className="tablero"
-                        color="primary"
-                        disabled={disabled}
-                        onClick={() => {
-                          props.actions.handleGoTo(
-                            props.origin,
-                            "3",
-                            props.name
-                          );
-                        }}
-                      >
-                        3
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="mb-1">
-                      <Button
-                        className="tablero"
-                        color="primary"
-                        disabled={disabled}
-                        onClick={() => {
-                          props.actions.handleGoTo(
-                            props.origin,
-                            "2",
-                            props.name
-                          );
-                        }}
-                      >
-                        2
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="mb-1">
-                      <Button
-                        className="tablero"
-                        color="primary"
-                        disabled={disabled}
-                        onClick={() => {
-                          props.actions.handleGoTo(
-                            props.origin,
-                            "1",
-                            props.name
-                          );
-                        }}
-                      >
-                        1
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="mb-1">
-                      <Button
-                        className="tablero"
-                        color="primary"
-                        disabled={disabled}
-                        onClick={() => {
-                          props.actions.handleGoTo(
-                            props.origin,
-                            "PB",
-                            props.name
-                          );
-                        }}
-                      >
-                        PB
-                      </Button>
-                    </Col>
-                  </Row>
+                  {props.floors &&
+                    panel.map((floor, index) => (
+                      <Row key={index}>
+                        <Col className="mb-1">
+                          <Button
+                            className="tablero"
+                            color="primary"
+                            disabled={disabled}
+                            onClick={() => {
+                              props.actions.handleGoTo(
+                                props.floor,
+                                floor.name,
+                                floor.id,
+                                props.id
+                              );
+                            }}
+                          >
+                            {floor.name}
+                          </Button>
+                        </Col>
+                      </Row>
+                    ))}
                 </CardBody>
               </Card>
             </Col>
@@ -121,51 +72,33 @@ const Elevators = ({ ...props }) => {
           <CardBody>
             <Row className="text-center">
               <Col className="mt-2 mb-4" xs="12" md={{ size: 6, offset: 3 }}>
-                <Label>{props.origin}</Label>
+                <Label>{props.floor}</Label>
               </Col>
             </Row>
             <Row className="text-center">
-              <Col>
-                <CardText title="Plata baja">PB</CardText>
-                <FontAwesomeIcon
-                  icon={faCaretSquareUp}
-                  size="3x"
-                  color="green"
-                  onClick={() => {
-                    props.actions.handleCallElevator(props.origin, "PB", props.name);
-                  }}
-                />
-              </Col>
-              <Col>
-                <CardText title="Piso 1">1</CardText>
-                <FontAwesomeIcon
-                  icon={faCaretSquareDown}
-                  size="3x"
-                  onClick={() => {
-                    props.actions.handleCallElevator(props.origin, "1", props.name);
-                  }}
-                />
-              </Col>
-              <Col>
-                <CardText title="Piso 2">2</CardText>
-                <FontAwesomeIcon
-                  icon={faCaretSquareDown}
-                  size="3x"
-                  onClick={() => {
-                    props.actions.handleCallElevator(props.origin, "1", props.name);
-                  }}
-                />
-              </Col>
-              <Col>
-                <CardText title="Piso 3">3</CardText>
-                <FontAwesomeIcon
-                  icon={faCaretSquareDown}
-                  size="3x"
-                  onClick={() => {
-                    props.actions.handleCallElevator(props.origin, "1", props.name);
-                  }}
-                />
-              </Col>
+              {props.floors &&
+                props.floors.map((floor, index) => (
+                  <Col key={index}>
+                    <CardText>{floor.name}</CardText>
+                    <FontAwesomeIcon
+                      icon={
+                        floor.name === "PB"
+                          ? faCaretSquareUp
+                          : faCaretSquareDown
+                      }
+                      size="3x"
+                      color={floor.name === "PB" ? "green" : ""}
+                      onClick={() => {
+                        props.actions.handleCallElevator(
+                          props.floor,
+                          floor.name,
+                          floor.id,
+                          props.id
+                        );
+                      }}
+                    />
+                  </Col>
+                ))}
             </Row>
           </CardBody>
         </Card>

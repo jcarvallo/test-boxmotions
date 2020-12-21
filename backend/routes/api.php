@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\ElevatorController;
+use App\Http\Controllers\API\FloorController;
+use App\Http\Controllers\API\SequenceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('elevators',ElevatorController::class);
+Route::apiResource('floors', FloorController::class);
+Route::apiResource('sequences', SequenceController::class);
+

@@ -8,15 +8,15 @@ export const StateProvider = ({ reducer, initialState, children }) => (
   </StateContext.Provider>
 );
 export const initialState = {
-  location: '',
+  buttonNav: { text: "Informe", path: "/reports" },
 };
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case "setLocation":
+    case "setButtonNav":
       return {
         ...state,
-        location: action.location
+        buttonNav: action.buttonNav,
       };
     default:
       return state;

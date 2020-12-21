@@ -1,8 +1,11 @@
 import React from "react";
 import { Navbar, NavbarBrand, Button } from "reactstrap";
 import { navigate } from "@reach/router";
+import { useStateValue } from "../context";
 
 const Navegacion = () => {
+  const ctx = useStateValue();
+
   return (
     <div>
       <Navbar color="light" light expand="md">
@@ -11,9 +14,9 @@ const Navegacion = () => {
           <Button
             color="info"
             className="text-right"
-            onClick={() => navigate("/reports")}
+            onClick={() => navigate(ctx[0].buttonNav.path)}
           >
-            Informe
+            {ctx[0].buttonNav.text}
           </Button>
         </div>
       </Navbar>

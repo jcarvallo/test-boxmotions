@@ -29,6 +29,7 @@ const Home = ({...props}) => {
                 {...acensor}
                 disabledPanel={props.disabledPanel}
                 actions={props.actionsElevator}
+                floors={props.floors}
               />
             </Col>
           ))}
