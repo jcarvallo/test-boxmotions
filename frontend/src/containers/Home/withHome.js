@@ -8,10 +8,12 @@ const withHome = (Component) => (props) => {
   const [disabledPanel, setDisabledPanel] = useState({});
   const [data, setData] = useState([]);
   const [floors, setFloors] = useState([]);
+  const [loading, setloading] = useState(true)
   let getElevators = async () => {
     try {
       let elevators = await ElevatorsService.getElevators();
       setData(elevators);
+      setloading(false)
     } catch (error) {}
   };
   let getFloors = async () => {
@@ -34,10 +36,13 @@ const withHome = (Component) => (props) => {
     }, 5000);
     return () => clearTimeout(interval);
   }, [disabledPanel]);
+
+
   const actions = {
     data,
     floors,
     disabledPanel,
+    loading,
     actionsElevator: {
       handleCallElevator: async (origin, destiny, floor_id, elevator) => {
         setDisabledPanel({ ...disabledPanel, elevator, disable: true });
