@@ -33,7 +33,7 @@ const Report = ({ ...props }) => {
             ))
           ) : (
             <tr>
-              <td colspan={5} className="text-center">No hay movimientos registrados</td>
+              <td colSpan="5" className="text-center">No hay movimientos registrados</td>
             </tr>
           )}
         </tbody>
